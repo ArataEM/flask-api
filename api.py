@@ -1,7 +1,7 @@
 import os
 from click import echo
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
 import dotenv
 from sqlalchemy import create_engine
@@ -58,15 +58,13 @@ class StudentSchema(Schema):
     cellphone = fields.Str()
 
 
-#student_schema = StudentSchema
-
 @app.route('/', methods = ['GET'])
 def hello():
-    return '<p>Hello</p>', 200
+    return '<p>Hello Flask</p>', 200
 
-@app.route('/api', methods = ['GET'])
+@app.route('/api/', methods = ['GET'])
 def api_main():
-    return jsonify('Hello, World!'), 200
+    return render_template('index.html'), 200
 
 @app.route('/api/students', methods=['GET'])
 def get_all_students():
@@ -86,16 +84,65 @@ def get_student(id):
 def add_student():
     json_data = request.get_json()
     new_student = Student(
-        name= json_data.get('name'),
-        email=json_data.get('email'),
-        age=json_data.get('age'),
-        cellphone=json_data.get('cellphone')
+        name = json_data.get('name'),
+        email = json_data.get('email'),
+        age = json_data.get('age'),
+        cellphone = json_data.get('cellphone')
     )
     new_student.save()
+
     serializer = StudentSchema()
     data = serializer.dump(new_student)
     return jsonify(data), 201
 
+
+@app.route('/api/students/modify/<int:id>', methods = ['PATCH'])
+def patch_student(id):
+    json_data = request.get_json()
+    student = Student.get_by_id(id)
+
+    if json_data.get('name') is not None: student.name = json_data.get('name')
+    if json_data.get('email') is not None: student.email = json_data.get('email')
+    if json_data.get('age') is not None: student.age = json_data.get('age')
+    if json_data.get('cellphone') is not None: student.cellphone = json_data.get('cellphone')
+
+    student.save()
+
+    serializer = StudentSchema()
+    data = serializer.dump(student)
+    return jsonify(data), 200
+
+
+@app.route('/api/students/change/<int:id>',  methods = ['PUT'])
+def put_student(id):
+    json_data = request.get_json()
+    student = Student.get_by_id(id)
+
+    student.name = json_data.get('name')
+    student.email = json_data.get('email')
+    student.age = json_data.get('age')
+    student.cellphone = json_data.get('cellphone')
+
+    student.save()
+
+    serializer = StudentSchema()
+    data = serializer.dump(student)
+    return jsonify(data), 200
+
+
+@app.route('/api/students/delete/<int:id>',  methods = ['DELETE'])
+def delete_student(id):
+    student = Student.get_by_id(id)
+    student.delete()
+    return '', 204
+
+@app.route('/api/health-check/ok',  methods = ['GET'])
+def health_check_ok():
+    return '', 200
+
+@app.route('/api/health-check/bad',  methods = ['GET'])
+def health_check_bad():
+    return '', 500
 
 if __name__ == '__main__':
     if not database_exists(engine.url):

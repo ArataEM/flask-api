@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask API</title>
+</head>
+<body>
+    <h4>List of api methods:</h4>
+    <ul>
+
+        <li>"/api" - returns this page (GET, 200)</li>
+        <li>"/api/students" - returns list of all students (GET, 200)</li>
+        <li>"/api/students/get/&lt;id&gt;" - returns student by id (GET, 200)</li>
+        <li>"/api/students/add" - creates new student (POST, 201)</li>
+        <li>"/api/students/modify/&lt;id&gt;" - changes student's data (PATCH, 200)</li>
+        <li>"/api/students/change/&lt;id&gt;" - changes all student's data (PUT, 200)</li>
+        <li>"/api/students/delete/&lt;id&gt;" - removes student (DELETE, 204)</li>
+
+    </ul>
+    
+</body>
+</html>
