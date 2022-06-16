@@ -1,2 +1,2 @@
 # flask-api
-Flask 
+Flask API project for Genesis DevOps School

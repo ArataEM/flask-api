@@ -1,0 +1,8 @@
+Flask-SQLAlchemy==None
+Flask==None
+pymysql==None
+python-dotenv==None
+sqlalchemy==None
+sqlalchemy_utils==None
+marshmallow-sqlalchemy==None
+cryptography==None
