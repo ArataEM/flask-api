@@ -42,7 +42,7 @@ class Student(db.Model):
     @classmethod
     def get_all(cls):
         return cls.query.all()
-    
+
     @classmethod
     def get_by_id(cls, id):
         return cls.query.get_or_404(id)
@@ -64,11 +64,11 @@ class StudentSchema(Schema):
     cellphone = fields.Str()
 
 
-@app.route('/', methods = ['GET'])
+@app.route('/', methods=['GET'])
 def hello():
     return '<p>Hello Flask</p>', 200
 
-@app.route('/api/', methods = ['GET'])
+@app.route('/api/', methods=['GET'])
 def api_main():
     return render_template('index.html'), 200
 
@@ -79,14 +79,14 @@ def get_all_students():
     response = student_list.dump(students)
     return jsonify(response), 200
 
-@app.route('/api/students/get/<int:id>', methods = ['GET'])
+@app.route('/api/students/get/<int:id>', methods=['GET'])
 def get_student(id):
     student_info = Student.get_by_id(id)
     serializer = StudentSchema()
     response = serializer.dump(student_info)
     return jsonify(response), 200
 
-@app.route('/api/students/add', methods = ['POST'])
+@app.route('/api/students/add', methods=['POST'])
 def add_student():
     json_data = request.get_json()
     new_student = Student(
@@ -102,7 +102,7 @@ def add_student():
     return jsonify(data), 201
 
 
-@app.route('/api/students/modify/<int:id>', methods = ['PATCH'])
+@app.route('/api/students/modify/<int:id>', methods=['PATCH'])
 def patch_student(id):
     json_data = request.get_json()
     student = Student.get_by_id(id)
@@ -119,7 +119,7 @@ def patch_student(id):
     return jsonify(data), 200
 
 
-@app.route('/api/students/change/<int:id>',  methods = ['PUT'])
+@app.route('/api/students/change/<int:id>', methods=['PUT'])
 def put_student(id):
     json_data = request.get_json()
     student = Student.get_by_id(id)
@@ -136,17 +136,17 @@ def put_student(id):
     return jsonify(data), 200
 
 
-@app.route('/api/students/delete/<int:id>',  methods = ['DELETE'])
+@app.route('/api/students/delete/<int:id>', methods=['DELETE'])
 def delete_student(id):
     student = Student.get_by_id(id)
     student.delete()
     return '', 204
 
-@app.route('/api/health-check/ok',  methods = ['GET'])
+@app.route('/api/health-check/ok', methods=['GET'])
 def health_check_ok():
     return '', 200
 
-@app.route('/api/health-check/bad',  methods = ['GET'])
+@app.route('/api/health-check/bad', methods=['GET'])
 def health_check_bad():
     return '', 500
 
