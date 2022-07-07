@@ -1,0 +1,24 @@
+name: CI-CD-Workflow
+
+on:
+  push:
+    branches:
+      - master
+      - ci-cd
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: flake8 Lint
+        uses: py-actions/flake8@v2
