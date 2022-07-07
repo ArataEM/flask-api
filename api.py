@@ -68,9 +68,11 @@ class StudentSchema(Schema):
 def hello():
     return '<p>Hello Flask</p>', 200
 
+
 @app.route('/api/', methods=['GET'])
 def api_main():
     return render_template('index.html'), 200
+
 
 @app.route('/api/students', methods=['GET'])
 def get_all_students():
@@ -79,12 +81,14 @@ def get_all_students():
     response = student_list.dump(students)
     return jsonify(response), 200
 
+
 @app.route('/api/students/get/<int:id>', methods=['GET'])
 def get_student(id):
     student_info = Student.get_by_id(id)
     serializer = StudentSchema()
     response = serializer.dump(student_info)
     return jsonify(response), 200
+
 
 @app.route('/api/students/add', methods=['POST'])
 def add_student():
@@ -142,18 +146,19 @@ def delete_student(id):
     student.delete()
     return '', 204
 
+
 @app.route('/api/health-check/ok', methods=['GET'])
 def health_check_ok():
     return '', 200
+
 
 @app.route('/api/health-check/bad', methods=['GET'])
 def health_check_bad():
     return '', 500
 
+
 if __name__ == '__main__':
     if not database_exists(engine.url):
         create_database(engine.url)
     db.create_all()
-    app.run(debug=True,host='0.0.0.0')
-
-
+    app.run(debug=True, host='0.0.0.0')
