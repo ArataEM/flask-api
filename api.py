@@ -94,10 +94,10 @@ def get_student(id):
 def add_student():
     json_data = request.get_json()
     new_student = Student(
-        name = json_data.get('name'),
-        email = json_data.get('email'),
-        age = json_data.get('age'),
-        cellphone = json_data.get('cellphone')
+        name=json_data.get('name'),
+        email=json_data.get('email'),
+        age=json_data.get('age'),
+        cellphone=json_data.get('cellphone')
     )
     new_student.save()
 
@@ -111,10 +111,14 @@ def patch_student(id):
     json_data = request.get_json()
     student = Student.get_by_id(id)
 
-    if json_data.get('name') is not None: student.name = json_data.get('name')
-    if json_data.get('email') is not None: student.email = json_data.get('email')
-    if json_data.get('age') is not None: student.age = json_data.get('age')
-    if json_data.get('cellphone') is not None: student.cellphone = json_data.get('cellphone')
+    if json_data.get('name') is not None:
+        student.name = json_data.get('name')
+    if json_data.get('email') is not None:
+        student.email = json_data.get('email')
+    if json_data.get('age') is not None:
+        student.age = json_data.get('age')
+    if json_data.get('cellphone') is not None:
+        student.cellphone = json_data.get('cellphone')
 
     student.save()
 
