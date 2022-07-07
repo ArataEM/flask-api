@@ -30,6 +30,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
+
 class Student(db.Model):
     __tablename__ = "student"
     id = db.Column(db.Integer, primary_key=True)
@@ -37,7 +38,7 @@ class Student(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     age = db.Column(db.Integer, nullable=False)
     cellphone = db.Column(db.String(13), unique=True, nullable=False)
- 
+
     @classmethod
     def get_all(cls):
         return cls.query.all()
@@ -45,11 +46,11 @@ class Student(db.Model):
     @classmethod
     def get_by_id(cls, id):
         return cls.query.get_or_404(id)
- 
+
     def save(self):
         db.session.add(self)
         db.session.commit()
- 
+
     def delete(self):
         db.session.delete(self)
         db.session.commit()
