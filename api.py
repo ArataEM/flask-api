@@ -48,8 +48,8 @@ class Student(db.Model):
         return cls.query.get_or_404(id)
 
     def save(self):
-          db.session.add(self)
-          db.session.commit()
+        db.session.add(self)
+        db.session.commit()
 
     def delete(self):
         db.session.delete(self)
@@ -62,9 +62,9 @@ class StudentSchema(Schema):
     email = fields.Str()
     age = fields.Integer()
     cellphone = fields.Str()
- 
 
-@app.route('/', methods= ['GET'])
+
+@app.route('/', methods=['GET'])
 def hello():
     return '<p>Hello Flask</p>', 200
 
