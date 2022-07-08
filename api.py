@@ -15,19 +15,15 @@ db_pass = os.environ.get("DB_PASSWORD")
 db_hostname = os.environ.get("DB_HOSTNAME")
 db_name = os.environ.get("DB_NAME")
 
-DB_URI = 'mysql+pymysql://{db_username}:{db_password}@{db_host}/{database}' \
-    .format(
-        db_username=db_user,
-        db_password=db_pass,
-        db_host=db_hostname,
-        database=db_name
+DB_URI = 'mysql+pymysql://{db_username}:{db_password}@{db_host}/{database}'.format(
+        db_username=db_user, db_password=db_pass, db_host=db_hostname, database=db_name
     )
 
 engine = create_engine(DB_URI, echo=True)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config["SQLALCHEMY_DATABASE_URI"] = DB_URI
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 BaseModel: DefaultMeta = db.Model
@@ -99,7 +95,7 @@ def add_student():
         name=json_data.get("name"),
         email=json_data.get("email"),
         age=json_data.get("age"),
-        cellphone=json_data.get("cellphone")
+        cellphone=json_data.get("cellphone"),
     )
     new_student.save()
 
