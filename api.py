@@ -9,10 +9,10 @@ from marshmallow import Schema, fields
 
 dotenv.load_dotenv()
 
-db_user = os.environ.get('DB_USERNAME')
-db_pass = os.environ.get('DB_PASSWORD')
-db_hostname = os.environ.get('DB_HOSTNAME')
-db_name = os.environ.get('DB_NAME')
+db_user = os.environ.get("DB_USERNAME")
+db_pass = os.environ.get("DB_PASSWORD")
+db_hostname = os.environ.get("DB_HOSTNAME")
+db_name = os.environ.get("DB_NAME")
 
 DB_URI = 'mysql+pymysql://{db_username}:{db_password}@{db_host}/{database}' \
     .format(
@@ -64,17 +64,17 @@ class StudentSchema(Schema):
     cellphone = fields.Str()
 
 
-@app.route('/', methods=['GET'])
+@app.route("/", methods=["GET"])
 def hello():
-    return '<p>Hello Flask</p>', 200
+    return "<p>Hello Flask</p>", 200
 
 
-@app.route('/api/', methods=['GET'])
+@app.route("/api/", methods=["GET"])
 def api_main():
-    return render_template('index.html'), 200
+    return render_template("index.html"), 200
 
 
-@app.route('/api/students', methods=['GET'])
+@app.route("/api/students", methods=["GET"])
 def get_all_students():
     students = Student.get_all()
     student_list = StudentSchema(many=True)
@@ -82,7 +82,7 @@ def get_all_students():
     return jsonify(response), 200
 
 
-@app.route('/api/students/get/<int:id>', methods=['GET'])
+@app.route("/api/students/get/<int:id>", methods=["GET"])
 def get_student(id):
     student_info = Student.get_by_id(id)
     serializer = StudentSchema()
@@ -90,14 +90,14 @@ def get_student(id):
     return jsonify(response), 200
 
 
-@app.route('/api/students/add', methods=['POST'])
+@app.route("/api/students/add", methods=["POST"])
 def add_student():
     json_data = request.get_json()
     new_student = Student(
-        name=json_data.get('name'),
-        email=json_data.get('email'),
-        age=json_data.get('age'),
-        cellphone=json_data.get('cellphone')
+        name=json_data.get("name"),
+        email=json_data.get("email"),
+        age=json_data.get("age"),
+        cellphone=json_data.get("cellphone")
     )
     new_student.save()
 
@@ -106,19 +106,19 @@ def add_student():
     return jsonify(data), 201
 
 
-@app.route('/api/students/modify/<int:id>', methods=['PATCH'])
+@app.route("/api/students/modify/<int:id>", methods=["PATCH"])
 def patch_student(id):
     json_data = request.get_json()
     student = Student.get_by_id(id)
 
-    if json_data.get('name') is not None:
-        student.name = json_data.get('name')
-    if json_data.get('email') is not None:
-        student.email = json_data.get('email')
-    if json_data.get('age') is not None:
-        student.age = json_data.get('age')
-    if json_data.get('cellphone') is not None:
-        student.cellphone = json_data.get('cellphone')
+    if json_data.get("name") is not None:
+        student.name = json_data.get("name")
+    if json_data.get("email") is not None:
+        student.email = json_data.get("email")
+    if json_data.get("age") is not None:
+        student.age = json_data.get("age")
+    if json_data.get("cellphone") is not None:
+        student.cellphone = json_data.get("cellphone")
 
     student.save()
 
@@ -127,15 +127,15 @@ def patch_student(id):
     return jsonify(data), 200
 
 
-@app.route('/api/students/change/<int:id>', methods=['PUT'])
+@app.route("/api/students/change/<int:id>", methods=["PUT"])
 def put_student(id):
     json_data = request.get_json()
     student = Student.get_by_id(id)
 
-    student.name = json_data.get('name')
-    student.email = json_data.get('email')
-    student.age = json_data.get('age')
-    student.cellphone = json_data.get('cellphone')
+    student.name = json_data.get("name")
+    student.email = json_data.get("email")
+    student.age = json_data.get("age")
+    student.cellphone = json_data.get("cellphone")
 
     student.save()
 
@@ -144,25 +144,25 @@ def put_student(id):
     return jsonify(data), 200
 
 
-@app.route('/api/students/delete/<int:id>', methods=['DELETE'])
+@app.route("/api/students/delete/<int:id>", methods=["DELETE"])
 def delete_student(id):
     student = Student.get_by_id(id)
     student.delete()
-    return '', 204
+    return "", 204
 
 
-@app.route('/api/health-check/ok', methods=['GET'])
+@app.route("/api/health-check/ok", methods=["GET"])
 def health_check_ok():
-    return '', 200
+    return "OK", 200
 
 
-@app.route('/api/health-check/bad', methods=['GET'])
+@app.route("/api/health-check/bad", methods=["GET"])
 def health_check_bad():
-    return '', 500
+    return "Error", 500
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     if not database_exists(engine.url):
         create_database(engine.url)
     db.create_all()
-    app.run(debug=True, host='0.0.0.0')
+    app.run(debug=True, host="0.0.0.0")
