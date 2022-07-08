@@ -4,6 +4,8 @@ name: CI-CD-Workflow
 on:
   pull_request:
     branches: [master]
+  push:
+    branches: [ci-cd]
   workflow_dispatch:
 
 env:
