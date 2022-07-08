@@ -1,12 +1,12 @@
 import os
 
 import dotenv
-from flask import Flask, jsonify, request, render_template
+from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_sqlalchemy.model import DefaultMeta
 from marshmallow import Schema, fields
 from sqlalchemy import create_engine
-from sqlalchemy_utils import database_exists, create_database
+from sqlalchemy_utils import create_database, database_exists
 
 dotenv.load_dotenv()
 
@@ -15,7 +15,7 @@ db_pass = os.environ.get("DB_PASSWORD")
 db_hostname = os.environ.get("DB_HOSTNAME")
 db_name = os.environ.get("DB_NAME")
 
-DB_URI = 'mysql+pymysql://{db_username}:{db_password}@{db_host}/{database}'.format(
+DB_URI = "mysql+pymysql://{db_username}:{db_password}@{db_host}/{database}".format(
         db_username=db_user, db_password=db_pass, db_host=db_hostname, database=db_name
     )
 
