@@ -6,19 +6,28 @@ on:
       - master
       - ci-cd
 
+env:
+  REGISTRY: arataem/flask-api
+
 jobs:
   lint:
     runs-on: ubuntu-latest
     name: Lint
     steps:
 
-      - name: Git checkout
+      - name: Git Checkout
         uses: actions/checkout@v3
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          fetch-depth: 0
 
-      - name: flake8 Lint
-        uses: py-actions/flake8@v2
+      # - name: Setup Python
+      #   uses: actions/setup-python@v4
+      #   with:
+      #     python-version: '3.8'
+
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: master
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
