@@ -1,11 +1,12 @@
 import os
 
+import dotenv
 from flask import Flask, jsonify, request, render_template
 from flask_sqlalchemy import SQLAlchemy
-import dotenv
+from flask_sqlalchemy.model import DefaultMeta
+from marshmallow import Schema, fields
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
-from marshmallow import Schema, fields
 
 dotenv.load_dotenv()
 
@@ -29,9 +30,10 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
+BaseModel: DefaultMeta = db.Model
 
 
-class Student(db.Model):
+class Student(DefaultMeta):
     __tablename__ = "student"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
