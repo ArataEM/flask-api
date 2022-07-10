@@ -71,7 +71,7 @@ jobs:
     needs: build_and_push
     strategy:
       matrix:
-        host: ["3.67.175.63","18.197.153.186"]
+        host: [3.67.175.63, 18.197.153.186]
     env:
       HOST: ${{ secrets.HOST }}
       USERNAME: ubuntu
