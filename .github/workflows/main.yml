@@ -96,7 +96,7 @@ jobs:
           host: ${{ env.HOST }}
           username: ${{ env.USERNAME }}
           key: ${{ secrets.KEY }}
-          envs: ${{ secrets.DOCKER_USER }}, ${{ secrets.DOCKERHUB_TOKEN }} ,${{ secret.DB_USERNAME }}, ${{ secret.DB_PASSWORD }}, ${{ secret.DB_HOSTNAME }}
+          envs: ${{ secrets.DOCKER_USER }}, ${{ secrets.DOCKERHUB_TOKEN }} ,${{ secrets.DB_USERNAME }}, ${{ secrets.DB_PASSWORD }}, ${{ secrets.DB_HOSTNAME }}
           port: 22
           script: |
             # login docker
