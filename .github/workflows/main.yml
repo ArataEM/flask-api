@@ -98,7 +98,7 @@ jobs:
           host: ${{ env.HOST }}
           username: ${{ env.USERNAME }}
           key: ${{ secrets.KEY }}
-          envs: ${{ secrets.DOCKER_USER }}, ${{ secrets.DOCKERHUB_TOKEN }} ,${{ secrets.DB_USERNAME }}, ${{ secrets.DB_PASSWORD }}, ${{ secrets.DB_HOSTNAME }}
+          envs: ${{ secrets.DOCKER_USER }}, ${{ secrets.DOCKERHUB_TOKEN }} #,${{ secrets.DB_USERNAME }}, ${{ secrets.DB_PASSWORD }}, ${{ secrets.DB_HOSTNAME }}
           port: 22
           script: |
             # login docker
@@ -113,8 +113,8 @@ jobs:
             --name flask-app \
             --restart always \
             -p 5000:5000 \
-            -e DB_USERNAME=$DB_USERNAME \
-            -e DB_PASSWORD=$DB_PASSWORD \
-            -e DB_HOSTNAME=$DB_HOSTNAME \
+            -e DB_USERNAME=${{ secrets.DB_USERNAME }} \
+            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -e DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} \
             -e DB_NAME=${{ env.DB_NAME }} \
             ${{ env.REGISTRY }}:${{ needs.build_and_push.outputs.commit_hash }}
