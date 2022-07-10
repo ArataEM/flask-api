@@ -99,6 +99,9 @@ jobs:
           envs: ${{ secrets.DOCKER_USER }}, ${{ secrets.DOCKERHUB_TOKEN }}
           port: 22
           script: |
+            # Echo matrix host
+            echo ${{ matrix.host }}
+
             # login docker
             docker login -u $DOCKER_USER -p $DOCKERHUB_TOKEN
 
