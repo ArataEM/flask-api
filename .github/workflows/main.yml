@@ -77,15 +77,17 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v3
 
-      - name: copy file via ssh password
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ env.HOST }}
-          username: ${{ env.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: 22
-          source: "docker-compose.yml"
-          target: "docker-compose.yml"
+      # - name: copy file via ssh password
+      #   uses: appleboy/scp-action@master
+      #   env:
+      #     HOST: 18.197.153.186
+      #   with:
+      #     host: ${{ env.HOST }}
+      #     username: ${{ env.USERNAME }}
+      #     key: ${{ secrets.KEY }}
+      #     port: 22
+      #     source: "docker-compose.yml"
+      #     target: "docker-compose.yml"
 
       - name: Deploy to EC2 instanse via SSH action
         uses: appleboy/ssh-action@v0.1.3
