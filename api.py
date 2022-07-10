@@ -24,7 +24,7 @@ app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = DB_URI
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-db = SQLAlchemy(app)  # type: ignore
+db = SQLAlchemy(app)
 
 
 class Student(db.Model):
