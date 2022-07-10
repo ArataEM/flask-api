@@ -4,8 +4,8 @@ name: CI-CD-Workflow
 on:
   pull_request:
     branches: [master]
-  # push:
-  #   branches: [ci-cd]
+  push:
+    branches: [ci-cd]
   workflow_dispatch:
 
 env:
@@ -90,7 +90,7 @@ jobs:
       - name: Deploy to EC2 instanse via SSH action
         uses: appleboy/ssh-action@v0.1.3
         env:
-          HOST: 127.0.0.1
+          HOST: 18.197.153.186
           DB_NAME: student
         with:
           host: ${{ env.HOST }}
