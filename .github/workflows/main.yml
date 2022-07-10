@@ -69,6 +69,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Deploy
     needs: build_and_push
+    strategy:
+      matrix:
+        host: ["3.67.175.63","18.197.153.186"]
     env:
       HOST: ${{ secrets.HOST }}
       USERNAME: ubuntu
@@ -77,28 +80,19 @@ jobs:
       - name: Git Checkout
         uses: actions/checkout@v3
 
-      # - name: copy file via ssh password
-      #   uses: appleboy/scp-action@master
-      #   env:
-      #     HOST: 18.197.153.186
-      #   with:
-      #     host: ${{ env.HOST }}
-      #     username: ${{ env.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     port: 22
-      #     source: "docker-compose.yml"
-      #     target: "docker-compose.yml"
+      - name: Get
+        id: vars
+        run: echo ::set-output name=docker_tag::$(echo ${GITHUB_REF} | cut -d'/' -f3)-${GITHUB_SHA}
 
       - name: Deploy to EC2 instanse via SSH action
         uses: appleboy/ssh-action@v0.1.3
         env:
-          HOST: 18.197.153.186
           DB_NAME: student
         with:
-          host: ${{ env.HOST }}
+          host: ${{ matrix.host }}
           username: ${{ env.USERNAME }}
           key: ${{ secrets.KEY }}
-          envs: ${{ secrets.DOCKER_USER }}, ${{ secrets.DOCKERHUB_TOKEN }} #,${{ secrets.DB_USERNAME }}, ${{ secrets.DB_PASSWORD }}, ${{ secrets.DB_HOSTNAME }}
+          envs: ${{ secrets.DOCKER_USER }}, ${{ secrets.DOCKERHUB_TOKEN }}
           port: 22
           script: |
             # login docker
