@@ -73,7 +73,7 @@ jobs:
       matrix:
         host: [3.67.175.63]
     env:
-      HOST: ${{ secrets.HOST }}
+      HOST: 3.67.175.63
       USERNAME: ubuntu
     steps:
 
@@ -85,7 +85,7 @@ jobs:
         env:
           DB_NAME: student
         with:
-          host: ${{ matrix.host }}
+          host: ${{ env.HOST }}
           username: ${{ env.USERNAME }}
           key: ${{ secrets.KEY }}
           envs: ${{ secrets.DOCKER_USER }}, ${{ secrets.DOCKERHUB_TOKEN }}
