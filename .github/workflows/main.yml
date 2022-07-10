@@ -73,13 +73,28 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}:${{ steps.commit_hash.outputs.commit_hash }}
 
+  get_infra:
+    runs-on: ubuntu-latest
+    name: Build and push docker image
+    steps:
+    - name: Setup AWS
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: eu-central-1
+
+    - name: Get instance hosts
+      id: instances
+      run: echo "::set-output name=instances::$(aws ec2 describe-instances --query 'Reservations[*].Instances[0].PublicIpAddress' --output yaml)"
+
   deploy:
     runs-on: ubuntu-latest
     name: Deploy
-    needs: build_and_push
+    needs: [build_and_push, get_infra]
     strategy:
       matrix:
-        host: [[3.67.175.63], [18.197.153.186]]
+        host: [needs.get_infra.outputs.instances]
     env:
       #HOST: 3.67.175.63
       USERNAME: ubuntu
