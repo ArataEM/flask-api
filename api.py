@@ -3,7 +3,6 @@ import os
 import dotenv
 from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from flask_sqlalchemy.model import DefaultMeta
 from marshmallow import Schema, fields
 from sqlalchemy import create_engine
 from sqlalchemy_utils import create_database, database_exists
@@ -26,10 +25,9 @@ app.config["SQLALCHEMY_DATABASE_URI"] = DB_URI
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
-BaseModel: DefaultMeta = db.Model
 
 
-class Student(DefaultMeta):
+class Student(db.Model):
     __tablename__ = "student"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
