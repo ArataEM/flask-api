@@ -95,7 +95,7 @@ jobs:
     needs: [build_and_push, get_infra]
     strategy:
       matrix:
-        host: ${{ needs.get_infra.outputs.instances }}
+        host: ${{ fromJSON(needs.get_infra.outputs.instances) }}
     env:
       #HOST: 3.67.175.63
       USERNAME: ubuntu
