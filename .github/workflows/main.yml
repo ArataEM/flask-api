@@ -112,7 +112,7 @@ jobs:
 
   report:
     runs-on: ubuntu-latest
-    name: Avaiability check
+    name: Availability check
     needs: deploy
     strategy:
       matrix:
