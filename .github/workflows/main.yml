@@ -37,6 +37,7 @@ jobs:
       - name: flake8 Lint
         uses: py-actions/flake8@v2
 
+
   build_and_push:
     runs-on: ubuntu-latest
     name: Build and push docker image
@@ -73,21 +74,6 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}:${{ steps.commit_hash.outputs.commit_hash }}
 
-  get_infra:
-    runs-on: ubuntu-latest
-    name: Discover AWS instances to deploy
-    steps:
-    - name: Setup AWS
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: eu-central-1
-
-    - name: Get instance hosts
-      id: instances
-      #run: echo "::set-output name=instances::$(aws ec2 describe-instances --query 'Reservations[*].Instances[0].PublicIpAddress' --output json | sed -z 's/\n//g;s/ //g')"
-      run: echo ::set-output name=instances::toJSON("[3.64.228.99,54.93.221.112]")
 
   deploy:
     runs-on: ubuntu-latest
@@ -95,9 +81,8 @@ jobs:
     needs: [build_and_push, get_infra]
     strategy:
       matrix:
-        host: ${{ needs.get_infra.outputs.instances }}
+        host: [3.64.228.99, 54.93.221.112]
     env:
-      #HOST: 3.67.175.63
       USERNAME: ubuntu
       DB_NAME: student
     steps:
