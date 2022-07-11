@@ -86,7 +86,7 @@ jobs:
 
     - name: Get instance hosts
       id: instances
-      run: echo "::set-output name=instances::$(aws ec2 describe-instances --query 'Reservations[*].Instances[0].PublicIpAddress' --output yaml)"
+      run: echo "::set-output name=instances::$(aws ec2 describe-instances --query 'Reservations[*].Instances[0].PublicIpAddress' --output json | sed -z 's/\n//g;s/ //g')"
 
   deploy:
     runs-on: ubuntu-latest
