@@ -113,7 +113,7 @@ jobs:
   report:
     runs-on: ubuntu-latest
     name: Avaiability check
-    needs: build_and_push
+    needs: deploy
     strategy:
       matrix:
         host: [3.64.228.99, 54.93.221.112]
