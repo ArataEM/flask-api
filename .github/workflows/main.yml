@@ -4,6 +4,8 @@ name: CI-CD-Workflow
 on:
   pull_request:
     branches: [master]
+  push:
+    branches: [master]
   workflow_dispatch:
 
 env:
@@ -26,14 +28,6 @@ jobs:
           VALIDATE_ALL_CODEBASE: false
           DEFAULT_BRANCH: master
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-      # - name: Set up Python environment
-      #   uses: actions/setup-python@v2
-      #   with:
-      #     python-version: "3.8"
-
-      # - name: flake8 Lint
-      #   uses: py-actions/flake8@v2
 
 
   build_and_push:
