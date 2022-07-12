@@ -97,6 +97,7 @@ jobs:
             # cleanup
             docker stop flask-api
             docker rm flask-api
+            docker image prune -af
 
             # Run a new container from a new image
             docker run -d \
@@ -108,3 +109,17 @@ jobs:
             -e DB_HOSTNAME=${{ secrets.DB_HOSTNAME }} \
             -e DB_NAME=${{ env.DB_NAME }} \
             ${{ env.REGISTRY }}:${{ needs.build_and_push.outputs.commit_hash }}
+
+
+  report:
+    runs-on: ubuntu-latest
+    name: Availability check
+    needs: deploy
+    strategy:
+      matrix:
+        host: [3.64.228.99, 54.93.221.112]
+    env:
+      PORT: 5000
+    steps:
+      - name: Curl Endpoint
+        run: curl http://${{ matrix.host }}:${{ env.PORT }}/api/health-check/ok

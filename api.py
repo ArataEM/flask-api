@@ -27,7 +27,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 
-class Student(db.Model):
+class Student(db.Model):  # type: ignore
     __tablename__ = "student"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
@@ -149,7 +149,7 @@ def delete_student(id):
 
 @app.route("/api/health-check/ok", methods=["GET"])
 def health_check_ok():
-    return "OK", 200
+    return "OK! Service is Available!", 200
 
 
 @app.route("/api/health-check/bad", methods=["GET"])
