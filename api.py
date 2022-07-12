@@ -27,7 +27,7 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 
 
-class Student(db.Model):
+class Student(db.Model):  # type: ignore
     __tablename__ = "student"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
