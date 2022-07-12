@@ -149,7 +149,7 @@ def delete_student(id):
 
 @app.route("/api/health-check/ok", methods=["GET"])
 def health_check_ok():
-    return "OK", 200
+    return "OK! Service is Available!", 200
 
 
 @app.route("/api/health-check/bad", methods=["GET"])
