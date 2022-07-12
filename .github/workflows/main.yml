@@ -97,6 +97,7 @@ jobs:
             # cleanup
             docker stop flask-api
             docker rm flask-api
+            docker image prune -af
 
             # Run a new container from a new image
             docker run -d \
