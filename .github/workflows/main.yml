@@ -73,7 +73,7 @@ jobs:
     needs: build_and_push
     strategy:
       matrix:
-        host: [3.64.228.99, 54.93.221.112]
+        host: [18.185.88.105, 3.122.56.251]
     env:
       USERNAME: ubuntu
       DB_NAME: student
@@ -119,7 +119,7 @@ jobs:
     needs: deploy
     strategy:
       matrix:
-        host: [3.64.228.99, 54.93.221.112]
+        host: [18.185.88.105, 3.122.56.251]
     env:
       PORT: 5000
     steps:
